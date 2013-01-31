@@ -1,0 +1,291 @@
+<!DOCTYPE html> 
+<!--
+  Copyright 2010 Google Inc.
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ 
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Ernest Delgado (ernestd@google.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+--> 
+<html>
+  <head> 
+    <meta charset="utf-8" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+    <title>Servidores GNU/Linux</title> 
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" /> 
+    <link rel="stylesheet" href="css/style.css" />
+  </head> 
+  <body> 
+
+    <div class="presentation"> 
+              <div id="presentation-counter"></div> 
+        
+      <div class="slides"> 
+ 
+        <div class="slide"> 
+          <section class="center intro"> 
+            <hgroup> 
+              <h1> 
+                guifi.<span class="red">net</span> 
+              </h1> 
+              <h2 style="font-size: 2em;">Servidor de gráficas.</h2> 
+            </hgroup> 
+            <p style="font-size: 20px; line-height: 25px;">Instalación de servicios en guifi.net bajo plataforma GNU/Linux.</p> 
+            <p>Apreta la tecla <span class="key">&rarr;</span> para avanzar.</p> 
+        <img style="position: absolute; left: 1em; bottom: 1em; opacity: .5;" src="images/iparty.jpg" /> 
+        <img style="position: absolute; right: .5em; bottom: .5em; opacity: .5;" src="images/uji140.png" /> 
+          </section> 
+        </div>     
+ 
+      <div class="slide">
+          <img class="intro" src="images/practice.png" />
+          <section class="middle">
+            <h2 style="font-size: 6em; text-align: center;">snpservices</h2>
+            <div class="box">
+              <h3 style="text-align: center;">Servidor de gráficas.</h3>
+            </div>
+            <p style="font-size: 100%;">Pulsa <span class="key">&rarr;</span> para continuar.</p>
+          </section>
+        </div>
+     </div> 
+
+      <div class="slide"> 
+        <header>Introducción</header> 
+        <section> 
+        <p class="small">SNPServices es la herramienta de monitorización/graficado de nodos por guifi.net.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>En una red de este tipo se hace necesario una utilidad de diagnóstico rápido.</li>
+            <li>Basado totalmente en software open-source.</li>
+            <li>Nos representará gráficamente el estado/tráfico de los nodos.</li>
+            <li>El proceso de monitorización de nuevos nodos es automático, no intervenimos para nada.</li>
+            <li>Un servidor de gráficas puede ocuparse de múltiples zonas a la vez.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Gráficas de tráfico del servidor UJI" src="images/ujigraph01.jpg" />
+            <img alt="Gráficas de ping de mi servidor de casa" src="images/graphboots01.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Información graficada</header> 
+        <section> 
+        <p class="small">Las gráficas nos proporcionan la siguiente información.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>A nivel de supernodo, nos mostrará una gráfica de la evolución del tráfico de cada uno de los interfaces de red instalados.</li>
+            <li>Dentro de cada radio, podremos visualizar el tráfico de esa radio en cada uno de sus enlaces.</li>
+            <li>Además, visualizaremos unas gráficas de la latencia del ping hacia esa radio (desde el servidor de gráficas).</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Requerimientos</header> 
+        <section> 
+        <p class="small">Veamos los requerimientos para conseguir montar el servicio <strong>snpservices</strong></p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Un servidor donde instalarlo, preferiblemente basado en GNU/Linux.</li>
+            <li>La máquina debe tener acceso a la red a monitorizar, y a Internet.</li>
+            <li>Las herramientas de monitorización extraerán la información de guifi.net.</li>
+            <li>Un servidor web se encargará de publicarlas en Internet, para que se muestren en la web de guifi.net.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Ejercicio 6.4</header> 
+        <section> 
+        <p class="small">Vamos a hacer rápidamente el ejercicio que tenéis en el documento de Aulavirtual.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>¿Qué servidor está generando las gráficas de estos dos supernodos?</li>
+            <li><a href="http://guifi.net/ca/node/35901">http://guifi.net/ca/node/35901</a></li>
+            <li><a href="http://guifi.net/uji">http://guifi.net/uji</a></li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Instalar snpservices</header> 
+        <section> 
+        <p class="small">Snpservices depende de muchas herramientas de software libre.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Apache.</li>
+            <li>PHP.</li>
+            <li>RRDTool/MRTG</li>
+        </ul> 
+        <p class="small">El protocolo que consigue que todo esto funcione:</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>SNMP</li>
+        </ul>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>¿Todo eso hay que instalarlo?</header> 
+        <section> 
+        <p class="small">Sí, pero tranquilos/as, tenemos todo empaquetado para distribución Debian/Ubuntu. Este es el repositorio oficial:</p>
+        <pre>
+        # vi /etc/apt/sources.list
+        deb http://repo.vic.guifi.net/debian/  ./
+        # apt-get update
+        # apt-get install snpservices
+        </pre>
+        <p class="small">También podemos descargar <strong>snpservices</strong> directamente del repositorio oficial.</p>
+        <pre>
+        $ git clone https://gitorious.org/guifi/snpservices
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Paquete snpservices</header> 
+        <section> 
+        <p class="small">Veamos las dependencias del paquete snpservices.</p>
+        <pre>
+        # apt-cache show snpservices
+        Package: snpservices
+        Priority: optional
+        Section: web
+        Installed-Size: 244
+        Maintainer: Carles Guadall Blancafort <carles@viladelpingui.net>
+        Architecture: all
+        Version: 0.0.152-1
+        Depends: debconf (>= 0.5) | debconf-2.0, httpd | apache2, 
+                 php5, php5-cli, php5-gd, rrdtool, librrdp-perl, 
+                 librrds-perl, mrtg, mrtg-rrd
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Configuración de apache</header> 
+        <section> 
+        <p class="small">La configuración de Apache puede complicarse extremadamente dependiendo de lo que queramos hacer. En este caso vamos a simplificar, presuponemos que tenemos un servidor Apache con PHP, y queremos que la ruta /snpservices/ publique los contenidos de snpservices. Para ello, añadimos la siguiente directiva al archivo <strong>apache.conf</strong>
+        <pre>
+        Alias /snpservices/ /usr/share/snpservices/
+        </pre>
+        <p class="small">Una vez hecho esto, nuestra URL de publicación de gráficas será la siguiente:</p>
+        <pre>
+        http://direccion-ip/snpservices/graph/graph.php
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Dar de alta el servicio en guifi.net</header> 
+        <section> 
+        <p class="small">Llegados a este punto, conviene dar de alta ya el servicio en la web de guifi.net, con lo que obtendremos nuestro ID de servidor de gráficas.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Damos de alta un servicio "SNP Graph Server".</li>
+            <li>Nos pedirá que le asociemos un servidor (dado de alta previamente).</li>
+            <li>Nos solicitará información sobre la URL de publicación de gráficas.</li>
+            <li>Nos proporcionará un ID de servicio.</li>
+        </ul>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Alta del servicio SNP Graph Server" src="images/snpgraph01.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Modificar la zona guifi.net</header> <section> 
+        <p class="small">Tendremos que modificar la zona de guifi.net que queremos que se grafique con nuestro nuevo servidor para que la web sepa dónde tiene que ir a preguntar por las gráficas.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Editamos la zona, por ejemplo "Almassora".</li>
+            <li>Modificamos el parámetro "servidor de gràfiques per defecte".</li>
+            <li>Si dejamos "Agafar dels pares", le preguntara a la zona padre quién es el servidor de gráficas.</li>
+        </ul>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Modificar la zona con el nuevo servidor de gráficas" src="images/zone01.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>RRDTOOL & MRTG</header> 
+        <section> 
+        <p class="small">Son herramientas complejas de configurar. El paquete snpservices se encargará de hacer la faena sucia por nosotros.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>RRDTOOL: Proporciona las herramientas para almacenar cualquier tipo de dato en series progresivas de tiempo.</li>
+            <li>MRTG: Consulta varios dispositivos de red por SNMP, y almacena la información.</li>
+        </ul>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>SNPSERVICES</header> 
+        <section> 
+        <p class="small">Sólo necesitaremos 2 datos para configurarlo. El ID del nodo de nuestro servicio y el ID del nodo de la zona raiz que vamos a graficar.</p>
+        <pre>
+        # vi /etc/snpservices/config.php
+        $SNPGraphServerId = 35207; // ID del nodo de nuestro servicio
+        $rootZone = 18688; // ID del nodo de la zona raiz
+        </pre>
+        <p class="small">¿Qué más tenemos que hacer? Nada, lo hará todo un cron.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Cada 30 min. obtendrá la lista de nodos de la web de guifi.net.</li>
+            <li>Cada 5 min. consultara los datos SNMP y ping a todos los nodos que tenga que monitorizar.</li>
+        </ul>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Clientes SNMP</header> 
+        <section> 
+        <p class="small">A nivel de cliente deberemos habilitar el servidor SNMP que responda a las consultas que le haga nuestro servidor de gráficas. Veamos el ejemplo de cómo habilitarlo en Mikrotik:</p>
+        <pre>
+        [admin@Castalia] /snmp> print 
+            enabled: yes
+            contact: david.rubert@gmail.com
+            location: Castalia
+            engine-id: 
+            trap-target: 0.0.0.0
+            trap-community: public
+            trap-version: 1
+        </pre>
+        </section> 
+      </div> 
+
+      </div> <!-- slides --> 
+    </div> <!-- presentation --> 
+    <script src="js/jquery.js"></script>
+    <script src="js/common.js"></script>
+    <!--[if lt IE 9]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+		<script>CFInstall.check({ mode: "overlay" });</script>
+    <![endif]--> 
+
+  </body> 
+</html>

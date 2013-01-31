@@ -1,0 +1,555 @@
+<!DOCTYPE html> 
+<!--
+  Copyright 2010 Google Inc.
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ 
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Ernest Delgado (ernestd@google.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+--> 
+<html>
+  <head> 
+    <meta charset="utf-8" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+    <title>Servidores GNU/Linux</title> 
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" /> 
+    <link rel="stylesheet" href="css/style.css" />
+  </head> 
+  <body> 
+
+    <div class="presentation"> 
+              <div id="presentation-counter"></div> 
+        
+      <div class="slides"> 
+ 
+        <div class="slide"> 
+          <section class="center intro"> 
+            <hgroup> 
+              <h1> 
+                guifi.<span class="red">net</span> 
+              </h1> 
+              <h2 style="font-size: 2em;">Servidores GNU/Linux</h2> 
+            </hgroup> 
+            <p style="font-size: 20px; line-height: 25px;">Instalación de servicios en guifi.net bajo plataforma GNU/Linux.</p> 
+            <p>Apreta la tecla <span class="key">&rarr;</span> para avanzar.</p> 
+        <img style="position: absolute; left: 1em; bottom: 1em; opacity: .5;" src="images/iparty.jpg" /> 
+        <img style="position: absolute; right: .5em; bottom: .5em; opacity: .5;" src="images/uji140.png" /> 
+          </section> 
+        </div>     
+ 
+      <div class="slide"> 
+        <header><span class="html">guifi.net</span> <h1>Evolución de la red en Castellón</h1></header> 
+        <section> 
+      <p style="margin: 0;" class="small">Mapa de la evolución de los nodos y supernodos en Castellón:</p> 
+      <div class="map"> 
+        <div id="map1" style="width: 820px; height: 440px;"></div> 
+      </div> 
+      <p style="margin:0; font-size: .8em;" class="small">Actualmente en Castellón hay <strike>271</strike> <strike>1012</strike> <strong>1266</strong> nodos activos y <strike>175</strike> <strike>363</strike> <strong>470</strong> proyectados.</p> 
+    </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="TUX: Mascota oficial GNU/Linux" src="images/tux.jpg" />
+          </div> 
+        </section> 
+      </div> 
+ 
+      <div class="slide"> 
+        <header>Servidores GNU/Linux</header> 
+        <section> 
+        <p class="small">¿Por qué GNU/Linux para mi servidor?</p> 
+        <ul class="bullets" style="margin: 0;"> 
+          <li>S.O. muy versátil.</li>
+          <li>Comunidad de usuarios implicada en su desarrollo.</li>
+          <li>Todo tipo de software open-source a nuestra disposicion.</li>
+        </ul> 
+        <p class="small">El gran dilema: Mikrotik vs Linux</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Depende de factores tan variados como el tipo de montaje o nuestras convicciones personales.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="top500.org: Servidores de alto rendimiento" src="images/top500.jpg" />
+            <img alt="Netcraft: Servidores de más confianza" src="images/netcraft.jpg" />
+          </div> 
+        </section> 
+      </div> 
+ 
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Servidor HTTP: Apache" src="images/apache.jpg" />
+            <img alt="Servidor proxy: Squid" src="images/squid.jpg" />
+            <img alt="Túneles: OpenVPN" src="images/openvpn.jpg" />
+            <img alt="ISC: BIND&DHCP" src="images/isc.jpg" />
+          </div> 
+        </section> 
+      </div> 
+ 
+      <div class="slide"> 
+        <header>Distribuciones Linux</header> 
+        <section> 
+        <p class="small">¿Ventaja o hándicap?</p> 
+        <ul class="bullets" style="margin: 0;"> 
+          <li>Amplia variedad de distribuciones empaquetan Linux.</li>
+          <li>Comparten características comunes.</li>
+          <li>Se distancian entre ellas lo suficiente.</li>
+        </ul> 
+        <p class="small">¿Cuál elegir?</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Aquella con la que nos sintamos más cómodos</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Debian" src="images/debian.jpg" />
+            <img alt="Ubuntu Server" src="images/ubuntu.jpg" />
+            <img alt="Fedora" src="images/fedora.jpg" />
+            <img alt="Archlinux" src="images/archlinux.jpg" />
+            <img alt="Gentoo" src="images/gentoo.jpg" />
+            <img alt="OpenWRT + OPTWare" src="images/openwrt.jpg" />
+          </div> 
+        </section> 
+      </div> 
+ 
+      <div class="slide"> 
+        <header>Hardware</header> 
+        <section> 
+        <p class="small">Tenemos una extensa lista de posibilidades a la hora de elegir un hardware para una plataforma Linux:</p> 
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Cualquier PC genérico es capaz de funcionar con Linux.</li>
+            <li>Según necesidades concretas podremos optar por hardware más específico.</li>
+            <li>Bajo consumo, bajo coste, redundancia de datos, alto rendimiento, etc.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="PC Genérico" src="images/pc.jpg" />
+            <img alt="Alix" src="images/alix.jpg" />
+            <img alt="Raidsonic ICY BOX 4220" src="images/icybox.jpg" />
+            <img alt="Synology 411" src="images/synology.jpg" />
+            <img alt="QNAP 459" src="images/qnap459.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Antes de empezar</header> 
+        <section> 
+        <ul class="bullets" style="margin: 0;"> 
+            <li style="padding-bottom: .3em;">Dominar al 100% lo que os voy a contar es imposible, no quiero que os frustréis.</li>
+            <li style="padding-bottom: .3em;">Tocamos muchos ámbitos de la informática: redes, sistemas, servicios, aplicaciones.</li>
+            <li style="padding-bottom: .3em;">Todo lo que os voy a contar lo podéis montar vosotros con tiempo, paciencia y motivación.</li>
+            <li style="padding-bottom: .3em;">Las búsquedas en Google ahorran mucho tiempo.</li>
+            <li style="padding-bottom: .3em;">Para cualquier duda que os surja una vez terminado el curso: <a href="mailto:david.rubert@gmail.com">david.rubert@gmail.com.</a></li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide">
+          <img class="intro" src="images/practice.png" />
+          <section class="middle">
+            <h2 style="font-size: 6em; text-align: center;">Webmin</h2>
+            <div class="box">
+              <h3 style="text-align: center;">Administración Linux vía web.</h3>
+            </div>
+            <p style="font-size: 100%;">Pulsa <span class="key">&rarr;</span> para continuar.</p>
+          </section>
+        </div>
+     </div> 
+
+      <div class="slide"> 
+        <header>Webmin: Introducción</header> 
+        <section> 
+        <p class="small">Webmin es una herramienta para la administración de varias secciones de un sistema Linux vía web, evitando la complejidad de la línea de comandos.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>No nos evita tener que conocer en profundidad el sistema o los servicios.</li>
+            <li>Nos facilita el no tener que pegarnos con archivos de configuración diferentes.</li>
+            <li>Podemos crear roles y delegar la administración de servicios de manera sencilla.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Webmin: Instalación y arranque</header> 
+        <section> 
+        <p class="small">Dependiendo de nuestra distribución Linux, podremos instalar de paquete o si queremos de fuentes. Veamos las características:</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Lleva embebido un servidor web propio.</li> 
+            <li>Arrancará como servicio y escuchará un puerto no estándar (10000).</li>
+        </ul> 
+        <p class="small">Archivo <strong>miniserv.conf</strong></p>
+        <pre>
+        port=10000
+        allow=127.0.0.1 192.168.1.0/24
+        userfile=/etc/webmin/miniserv.users</pre>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Entrada" src="images/webmin01.jpg" />
+            <img alt="Página principal" src="images/webmin02.jpg" />
+            <img alt="Configuración de Webmin" src="images/webmin03.jpg" />
+            <img alt="Configuración de un servicio" src="images/webmin04.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Webmin: Delegando roles</header> 
+        <section> 
+        <p class="small">Una de las características más útiles de Webmin es la posibilidad de asignar permisos sobre un determinado servicio a un usuario.</li>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Accederíamos a la sección de gestión de Webmin, y de ahí a la gestión de usuarios.</li>
+            <li>Podemos delegar cualquier apartado de gestión vía web a un usuario.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Gestión de usuarios Webmin" src="images/webmin10.jpg" />
+            <img alt="Asignación de permisos a un usuario Webmin" src="images/webmin11.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Webmin: Módulos</header> 
+        <section> 
+        <p class="small">Por defecto, Webmin lleva módulos para gestionar una buena cantidad de servicios, pero es extensible y podemos instalarle módulos de gestión de servicios que no venga en la distribución por defecto.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Módulos de terceros:</li>
+            <li><a href="http://www.webmin.com/third.html">http://www.webmin.com/third.html</a></li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Webmin: Probadlo vosotros</header> 
+        <section> 
+        <p>Desde un navegador web, acceded a esta URL:</p>
+        <div class="box">
+            <p><a target="_blank" href="http://150.128.49.223:10000">http://150.128.49.223:10000</a></p>
+        </div>
+        </section> 
+      </div> 
+
+      <div class="slide">
+          <img class="intro" src="images/practice.png" />
+          <section class="middle">
+            <h2 style="font-size: 6em; text-align: center;">Squid</h2>
+            <div class="box">
+              <h3 style="text-align: center;">Servidor proxy</h3>
+            </div>
+            <p style="font-size: 100%;">Pulsa <span class="key">&rarr;</span> para continuar.</p>
+          </section>
+      </div>
+
+      <div class="slide"> 
+        <header>Squid: Introducción</header> 
+        <section> 
+        <p class="small">¿Qué es un servidor proxy?</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Programa que realiza una acción en representación de otro.</li>
+            <li>Utilidad más común: Dar acceso web a los clientes.</li>
+            <li>Proxy caché.</li>
+            <li>Proxy transparente.</li>
+            <li>Proxy web (puertos 80/443).</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Proxy: gráfico conceptual de funcionamiento" src="images/proxy.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Squid: configuración de clientes web</header> 
+        <section> 
+        <p class="small">Todos los navegadores soportan el acceso a la WWW a través de un servidor proxy, y tienen un apartado de su configuración habilitado para ello.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Permiten configurar un servidor proxy para acceso al puerto 80, el puerto SSL (443), el FTP o cualquier otro vía SOCKS.</li>
+            <li>Utilidad más común: Dar acceso web a los clientes.</li>
+            <li>Proxy caché.</li>
+            <li>Proxy transparente.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Configuración proxy de Chrome: 01" src="images/chrome01.jpg" />
+            <img alt="Configuración proxy de Chrome: 02" src="images/chrome02.jpg" />
+            <img alt="Configuración proxy de Firefox: 01" src="images/firefox_config01.jpg" />
+            <img alt="Configuración proxy de Firefox: 02" src="images/firefox_config02.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Squid: Archivo de configuración</header> 
+        <section> 
+        <p class="small">Toda la configuración se gestiona a través del archivo squid.conf.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Puerto de escucha.</li>
+            <li>Control de acceso a puertos.</li>
+            <li>Control de acceso por IP's.</li>
+            <li>Control de acceso por usuarios.</li>
+            <li>Limitación de ancho de banda.</li>
+            <li>Exclusión de determinados dominios de la navegación.</li>
+        </ul> 
+        <p class="small">Nos proporcionan una versión comentada de squid.conf donde se especifica qué hace cada directiva.</li>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Squid: Archivo de configuración</header> 
+        <section> 
+        <p class="small">Veamos algunos ejemplos:</p>
+        <ul><li>Puerto de escucha de Squid</li></ul>
+        <pre>
+        http_port 10.228.144.163:3128
+        </pre>
+        <ul><li>Control de acceso a una subred a través de ACL's:</li></ul>
+        <pre>
+        acl ip_acl src 192.168.1.0/24
+        http_access allow ip_acl
+        http_access deny all
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Squid: Archivo de configuración</header> 
+        <section> 
+        <ul><li>Control de acceso a puertos</li></ul>
+        <pre>
+        acl SSL_ports port 443
+        acl Safe_ports port 80          # http
+        acl Safe_ports port 21          # ftp
+        acl Safe_ports port 443         # https
+        acl Safe_ports port 70          # gopher
+        acl Safe_ports port 210         # wais
+        acl Safe_ports port 1025-65535  # unregistered ports
+        acl Safe_ports port 280         # http-mgmt
+        acl Safe_ports port 488         # gss-http
+        acl Safe_ports port 591         # filemaker
+        acl Safe_ports port 777         # multiling http
+        acl CONNECT method CONNECT
+
+        # Deny requests to certain unsafe ports
+        http_access deny !Safe_ports
+
+        # Deny CONNECT to other than secure SSL ports
+        http_access deny CONNECT !SSL_ports
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Squid: Logs</header> 
+        <section> 
+        <p class="small">Los logs de Squid nos dan información relativa a los usuarios que se conectan a nuestro proxy, con lo que podemos realizar más fácilmente labores de mantenimiento o diágnostico.</p>
+        <ul class="bullets">
+          <li>Archivo: access.log.</li>
+          <li>El archivo de log suele ser bastante ilegible de por sí.</li>
+          <li>Para entender algo: analizador de log Sarge.</li>
+        </ul>
+        <pre>
+        access_log /var/log/squid/access.log squid
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Análisis de estadísticas: Sarge 01" src="images/sarge01.jpg" />
+            <img alt="Análisis de estadísticas: Sarge 02" src="images/sarge02.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Squid: Proxies federados en guifi.net</header> 
+        <section> 
+        <p class="small">Guifi.net nos propone un modelo federado de autenticación de usuarios.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Los usuarios se dan de alta en la web de guifi.net con usuario nombre.apellido.</li>
+            <li>Los instaladores/administradores de zona aprueban los usuarios</li>
+            <li>Con el usuario registrado, pueden acceder a todos aquellos proxies que formen parte de la federación.</li>
+            <li>El administrador de proxy no tiene que hacer nada.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Dar de alta el servicio proxy en guifi.net" src="images/services01.jpg" />
+            <img alt="Los usuarios se dan de alta desde su nodo" src="images/federados01.jpg" />
+            <img alt="Formulario que rellenan los usuarios" src="images/federados02.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Configuración Squid: Proxies federados</header> 
+        <section> 
+        <p class="small">Esta es la configuración principal de Squid para hacer funcionar un proxy federado.</p>
+        <pre>
+        acl SSL_ports port 443
+        acl Safe_ports port 80          # http
+        acl Safe_ports port 443         # https
+        acl CONNECT method CONNECT
+
+        # Autenticacio
+        auth_param basic program /usr/libexec/ncsa_auth /etc/squid/guifinet_passwd
+        acl usuaris proxy_auth REQUIRED
+
+        # Blocked domains
+        acl blockeddomain dstdomain "/etc/squid/blocked.domains.acl"
+
+        # Access priority
+        http_access deny CONNECT !SSL_ports
+        http_access deny !Safe_ports
+        http_access deny blockeddomain
+        http_access allow usuaris
+        http_access deny all
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Archivo de usuarios: Proxies federados</header> 
+        <section> 
+        <p class="small">Descargaremos cada X minutos la lista de usuarios autorizados en los proxies federados, y recargaremos la configuración de Squid.</p>
+        <pre>
+        #!/bin/bash
+
+        PROXY_ID=31803
+        TMP=$(mktemp)
+
+        /bin/wget --timeout=240 http://www.guifi.net/es/node/$PROXY_ID/view/federated -qO $TMP
+        /bin/touch /etc/squid/guifinet_passwd
+        OK=`/bin/cat $TMP|wc -l`
+        NEW=`/usr/bin/diff /etc/squid/guifinet_passwd $TMP|wc -l`
+        if [ $OK != "0" ]; then
+          if [ $NEW != "0" ]; then
+            /bin/cp $TMP /etc/squid/guifinet_passwd
+            /etc/init.d/squid reload
+          fi;
+        fi;
+        rm -f $TMP
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide">
+        <header>Squid + Webmin: Autenticando usuarios</header>
+        <section>
+        <p class="small">Una vez comprendido el modelo de control de accesos de Squid, podemos fácilmente habilitar la autenticación de usuarios desde Webmin, y permitir de una persona administre el alta/baja de usuarios.</p>
+        <ul class="bullets" style="margin: 0;">
+            <li>Activaremos la autenticación básica de usuarios.</li>
+            <li>Añadiremos un ACL de autenticación externa.</li>
+            <li>Pondremos el ACL en la posición que le corresponda para permitir acceso a nuestros usuarios.</li>
+            <li>Daremos de alta usuarios desde la gestión.</li>
+        </ul>
+        </section>
+      </div>
+
+      <div class="slide">
+        <section class="middle">
+          <div class="gallery full">
+            <p class="top"></p>
+            <img alt="Programas de autenticación" src="images/squid_users04.jpg" />
+            <img alt="Control de acceso > Autentificación externa" src="images/squid_users01.jpg" />
+            <img alt="Añadimos una nueva restricción" src="images/squid_users03.jpg" />
+            <img alt="Le damos prioridad a la nueva ACL" src="images/squid_users02.jpg" />
+            <img alt="Autentificación Proxy > Añadir usuario" src="images/squid_users05.jpg" />
+          </div>
+        </section>
+      </div>
+
+      </div> <!-- slides --> 
+    </div> <!-- presentation --> 
+    <script src="js/jquery.js"></script>
+    <script src="js/guifinet_wms.js"></script>
+    <script src="js/common.js"></script>
+    <!--[if lt IE 9]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+		<script>CFInstall.check({ mode: "overlay" });</script>
+    <![endif]--> 
+
+    <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAA06IJoYHDPFMx4u3hTtaghxTwM0brOpm-All5BF6PoaKBxRWWERRbhnFGFf0Mqvrk6H-tTjxf5MGLGA"></script> 
+    <script type="text/javascript"> 
+        google.load("maps", "3.x", {"other_params":"sensor=false"});
+        google.setOnLoadCallback(function() {
+          
+ 
+    var castello = new google.maps.LatLng(40.009472,-0.024033);
+    var villafranca = new google.maps.LatLng(40.4270992, -0.2577482);
+    var map_options = {
+        zoom: 11,
+        center: castello,
+        mapTypeControl: false,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+    }
+    var map = new google.maps.Map(document.getElementById('map1'), map_options);
+    loadWMS(map);
+ 
+    legend = document.createElement('div');
+    legend.innerHTML='<div class="legend" style="background: white; padding: 5px; font-size: 14px;"><ul><li><img src="images/map/yellow.png" /> Enlaces funcionando</li><li><img src="images/map/green.png" /> Troncales entre supernodos</li><li><img src="images/map/blue.png" /> Enlaces en pruebas</li><li><img src="images/map/dot.png" /> Nodos de usuario</li><li><img src="images/map/star.png" /> Supernodos</li></ul></div>';
+    legend.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
+        });
+    </script> 
+
+  </body> 
+</html>

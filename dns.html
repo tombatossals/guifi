@@ -1,0 +1,350 @@
+<!DOCTYPE html> 
+<!--
+  Copyright 2010 Google Inc.
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ 
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Ernest Delgado (ernestd@google.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+--> 
+<html>
+  <head> 
+    <meta charset="utf-8" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+    <title>Servidores GNU/Linux</title> 
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" /> 
+    <link rel="stylesheet" href="css/style.css" />
+  </head> 
+  <body> 
+
+    <div class="presentation"> 
+              <div id="presentation-counter"></div> 
+        
+      <div class="slides"> 
+ 
+        <div class="slide"> 
+          <section class="center intro"> 
+            <hgroup> 
+              <h1> 
+                guifi.<span class="red">net</span> 
+              </h1> 
+              <h2 style="font-size: 2em;">DNS. DNSMasq y PowerDNS.</h2> 
+            </hgroup> 
+            <p style="font-size: 20px; line-height: 25px;">Instalación de servicios en guifi.net bajo plataforma GNU/Linux.</p> 
+            <p>Apreta la tecla <span class="key">&rarr;</span> para avanzar.</p> 
+        <img style="position: absolute; left: 1em; bottom: 1em; opacity: .5;" src="images/iparty.jpg" /> 
+        <img style="position: absolute; right: .5em; bottom: .5em; opacity: .5;" src="images/uji140.png" /> 
+          </section> 
+        </div>     
+ 
+      <div class="slide">
+          <img class="intro" src="images/practice.png" />
+          <section class="middle">
+            <h2 style="font-size: 6em; text-align: center;">DNS</h2>
+            <div class="box">
+              <h3 style="text-align: center;">Domain Name System.</h3>
+            </div>
+            <p style="font-size: 100%;">Pulsa <span class="key">&rarr;</span> para continuar.</p>
+          </section>
+        </div>
+     </div> 
+
+      <div class="slide"> 
+        <header>Introducción</header> 
+        <section> 
+        <p class="small">El DNS es probablemente el servicio más infravalorado de Internet, ya que es absolutamente necesario para que todo funcione de la manera que lo conocemos, pero nadie tiene muy claro cómo funciona. Veamos un resumen de sus características.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Se encarga de asociar nombres a IP's: www.google.es -> 209.85.148.147.</li>
+            <li>Conceptualmente simple.</li>
+            <li>Complejidad técnica importante, según lo que queramos hacer.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Arquitectura del DNS" src="images/dns1.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Arquitectura del DNS</header> 
+        <section> 
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Arquitectura jerárquica y distribuida.</li>
+            <li>Sistema de caché definido en el propio RFC.</li>
+            <li>La organización ICANN regula los registradores de dominio.</li>
+            <li>Los registradores de dominio nos gestionan el alta de nuevos dominios.</li>
+            <li>Si damos de alta un dominio, nosotros somos los encargados de que la zona funcione bien.</li>
+            <li>Tipos de registro: NS, A, CNAME.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Teoría de una petición DNS" src="images/dns02.jpg" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Tipos de servidores DNS</header> 
+        <section> 
+        <ul class="bullets" style="margin: 0;"> 
+            <li>DNS forwarder.</li>
+            <li>DNS recursor.</li>
+            <li>DNS cache.</li>
+            <li>Primary DNS.</li>
+            <li>Secondary DNS.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Implementaciones: DNSMasq</header> 
+        <section> 
+        <ul class="bullets" style="margin: 0;"> 
+            <li>DNS forwarder.</li>
+            <li>Muy sencillo, funciona sin configuración.</li>
+            <li>Delega la resolución a otro servidor.</li>
+        </ul> 
+        <p class="small">La instalación y puesta en marcha es muy sencilla.</p>
+        <pre>
+        # apt-get install dnsmasq
+        </pre>
+        <p class="small">Quien realmente resolverá las consultas es el DNS que tengamos configurado en /etc/resolv.conf</>
+        <pre>
+        # cat /etc/resolv.conf
+        nameserver 150.128.98.10
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Implementaciones: BIND</header> 
+        <section> 
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Implementación más utilizada de servidor DNS.</li>
+            <li>Desarrollada desde 1988.</li>
+            <li>Puede actuar como DNS: recursivo, cache, primario y secundario.</li>
+            <li>La última versión permite compilar el software y utilizar diferentes backends.</li>
+            <li>Ventajas: Muy extendido.</li>
+            <li>Handicap: gigante con pies de barro, complejo.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Implementaciones: PowerDNS</header> 
+        <section> 
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Implementación más moderna de un servidor DNS.</li>
+            <li>Modular.</li>
+            <li>Diferentes tipos de Backends: mysql, oracle, ldap, texto, odbc, geo, berkeleydb, etc.</li>
+            <li>Fácil de montar en su version recursiva.</li>
+            <li>Mucho más fácil de montar que Bind en su versión completa.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>pdns-recursor</header> 
+        <section> 
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Es una implementación completa de servidor DNS recursivo y caché</li>
+            <li>Muy sencillo de instalar.</li>
+        </ul> 
+        <pre>
+        # apt-get install pdns-recursor
+        </pre>
+        <p class="small">Nuestro servidor local ya responde por sí mismo a las consultas DNS:</p>
+        <pre>
+        $ host www.google.es localhost
+        www.google.es is an alias for www.google.com.
+        www.google.com is an alias for www.l.google.com.
+        www.l.google.com has address 74.125.39.104
+        ...
+        www.l.google.com has address 74.125.39.106
+        www.l.google.com has address 74.125.39.105
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Implementaciones: PowerDNS</header> 
+        <section> 
+	<p class="small">Si alguna vez queremos servir nuestro propio dominio de una manera más personaliza que la que nos ofrecen los hostings gratuitos, deberemos hacer funcionar PowerDNS en modo DNS primario.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Los datos de la zona los podemos almacenar en una base de datos MySQL.</li>
+            <li>Gestionar una zona es complicado, si podemos evitarlo nos libraremos de muchos problemas.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Tablas de la zona en MySQL 01" src="images/mysql01.png" />
+            <img alt="Tablas de la zona en MySQL 02" src="images/mysql02.png" />
+            <img alt="Tablas de la zona en MySQL 02" src="images/mysql03.png" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Ejemplo de uso: Integración con la web</header> 
+        <section> 
+	<p class="small">En castello.guifi.net gestionamos la zona nosotros con PowerDNS, lo que nos da la posibilidad de permitir que los usuarios añadan sus propios registros a la zona DNS.</p>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Cada usuario gestiona sólo sus registros.</li>
+            <li>Automáticamente se actualiza la zona con la nueva información</li>
+            <li>Simplemente es añadir/quitar un registro a la base de datos MySQL.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <section class="middle"> 
+          <div class="gallery full"> 
+            <p class="top"></p> 
+            <img alt="Gestión de la zona desde la web" src="images/web01.png" />
+          </div> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>Herramientas de diagnóstico</header>
+        <section> 
+	<p class="small">Veamos qué herramientas tenemos a nuestra disposición para diagnosticar un problema de DNS.</li>
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Recordemos: el DNS está especificado en /etc/resolv.conf.</li>
+            <li>Ante un problema disponemos de las siguientes herramientas: nslookup, dig, host y dnstracer.</li>
+            <li>Un problema de DNS puede ser difícil de diagnosticar. Debemos averiguar cuál es el DNS que falla: el directamente conectado, el intermedio, la raiz, el del dominio que consultamos, etc.</li>
+        </ul> 
+        </section> 
+      </div> 
+
+      <div class="slide"> 
+        <header>DIG&HOST</header> 
+        <section> 
+        <ul class="bullets" style="margin: 0;"> 
+            <li>Herramientas muy completas de consulta de DNS.</li>
+            <li>Dig es un poco liosa al principio, muy útil cuando la entiendes.</li>
+        </ul> 
+        <pre>
+	$ dig @server hostname type
+	# server: dirección IP del servidor al que queremos consultar
+	# hostname: registro que queremos consultar
+	# type: tipo de registro que queremos consultar (A, CNAME, NS)
+
+	$ host -t type hostname server
+	# server: dirección IP del servidor al que queremos consultar
+	# hostname: registro que queremos consultar
+	# type: tipo de registro que queremos consultar (A, CNAME, NS)
+        </pre>
+        </section> 
+      </div> 
+
+      <div class="slide">
+        <header>DIG&HOST</header>
+        <section>
+        <ul class="bullets" style="margin: 0;">
+            <li>Host es una herramienta mucho más sencilla y fácil, también más simple. Muy parecida a nslookup.</li>
+        </ul>
+        <pre>
+	dave@casa:~$ host castello.guifi.net
+	castello.guifi.net has address 150.128.97.38
+
+	dave@casa:~$ host -t NS guifi.net 150.128.98.10
+	guifi.net name server ns1.guifi.net.
+	guifi.net name server ns2.guifi.net.
+        </pre>
+        </section>
+      </div>
+
+      <div class="slide">
+        <header>DNSTRACER</header>
+        <section>
+        <ul class="bullets" style="margin: 0;">
+            <li>Esta utilidad vendría a ser una especie de traceroute para DNS.</li>
+            <li>Nos muestra en árbol cómo se realiza la solicitud de consulta de un registro.</li>
+        </ul>
+        <pre>
+	dave@haddock:~$ dnstracer -c -4 -s "." www.rediris.es
+	Tracing to www.rediris.es[a] via A.ROOT-SERVERS.NET, maximum of 3 retries
+	A.ROOT-SERVERS.NET [.] (198.41.0.4) 
+ 	|\___ ns15.communitydns.net [es] (194.0.1.15) Got authoritative answer 
+ 	|\___ ns1.cesca.es [es] (84.88.0.3) 
+ 	|     |\___ chico.rediris.es [rediris.es] (130.206.1.3) Got authoritative answer 
+ 	|     |\___ sun.rediris.es [rediris.es] (130.206.1.2) Got authoritative answer 
+ 	|     |\___ ns02.fccn.pt [rediris.es] (193.136.2.228) Got authoritative answer 
+ 	|     |\___ ns15.communitydns.net [rediris.es] (194.0.1.15) Got authoritative answer 
+ 	|      \___ scsnms.switch.ch [rediris.es] (130.59.1.30) Got authoritative answer 
+ 	|      \___ scsnms.switch.ch [rediris.es] (130.59.10.30) Got authoritative answer 
+ 	|\___ f.nic.es [es] (130.206.1.2) Got authoritative answer 
+ 	|\___ a.nic.es [es] (194.69.254.1) 
+ 	|     |\___ ns15.communitydns.net [rediris.es] (194.0.1.15) Got authoritative answer 
+ 	|     |\___ ns02.fccn.pt [rediris.es] (193.136.2.228) Got authoritative answer 
+ 	|     |\___ scsnms.switch.ch [rediris.es] (130.59.1.30) Got authoritative answer 
+ 	|     |\___ scsnms.switch.ch [rediris.es] (130.59.10.30) Got authoritative answer 
+ 	|     |\___ chico.rediris.es [rediris.es] (130.206.1.3) Got authoritative answer 
+ 	|      \___ sun.rediris.es [rediris.es] (130.206.1.2) Got authoritative answer 
+ 	|\___ ns-ext.nic.cl [es] (200.1.123.14) 
+ 	|     |\___ ns15.communitydns.net [rediris.es] (194.0.1.15) Got authoritative answer 
+ 	|     |\___ chico.rediris.es [rediris.es] (130.206.1.3) Got authoritative answer 
+ 	|     |\___ sun.rediris.es [rediris.es] (130.206.1.2) Got authoritative answer 
+ 	|     |\___ scsnms.switch.ch [rediris.es] (130.59.1.30) Got authoritative answer 
+ 	|     |\___ scsnms.switch.ch [rediris.es] (130.59.10.30) Got authoritative answer 
+ 	|      \___ ns02.fccn.pt [rediris.es] (193.136.2.228) Got authoritative answer 
+ 	|\___ sns-pb.isc.org [es] (192.5.4.1) 
+ 	|     |\___ scsnms.switch.ch [rediris.es] (130.59.1.30) Got authoritative answer 
+ 	|     |\___ scsnms.switch.ch [rediris.es] (130.59.10.30) Got authoritative answer 
+ 	|     |\___ ns02.fccn.pt [rediris.es] (193.136.2.228) Got authoritative answer 
+ 	|     |\___ ns15.communitydns.net [rediris.es] (194.0.1.15) Got authoritative answer 
+ 	|     |\___ chico.rediris.es [rediris.es] (130.206.1.3) Got authoritative answer 
+ 	|      \___ sun.rediris.es [rediris.es] (130.206.1.2) Got authoritative answer 
+  	\___ ns3.nic.fr [es] (192.134.0.49) 
+       		|\___ ns15.communitydns.net [rediris.es] (194.0.1.15) Got authoritative answer 
+       		|\___ sun.rediris.es [rediris.es] (130.206.1.2) Got authoritative answer 
+       		|\___ ns02.fccn.pt [rediris.es] (193.136.2.228) Got authoritative answer 
+       		|\___ scsnms.switch.ch [rediris.es] (130.59.1.30) Got authoritative answer 
+       		|\___ scsnms.switch.ch [rediris.es] (130.59.10.30) Got authoritative answer 
+        	\___ chico.rediris.es [rediris.es] (130.206.1.3) Got authoritative answer 
+
+	[...]
+        </pre>
+        </section>
+      </div>
+
+      </div> <!-- slides --> 
+    </div> <!-- presentation --> 
+    <script src="js/jquery.js"></script>
+    <script src="js/common.js"></script>
+    <!--[if lt IE 9]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+		<script>CFInstall.check({ mode: "overlay" });</script>
+    <![endif]--> 
+
+  </body> 
+</html>
